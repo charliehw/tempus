@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tempus</title>
+        <meta name="description" content="Time tracking">
+        <meta name="viewport" content="width=device-width">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="../lib/normalize-css/normalize.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="lib/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+
+        <div id="tempus-app">
+            
+            <div id="activity-actions">
+
+                <form action="#" id="form-main">
+                    <fieldset>
+                        <legend>What are you doing next?</legend>
+                        <input type="text" class="form-control">
+                        <button class="btn">Start</button>
+                    </fieldset>
+                </form>
+                
+                <div id="current-activity"></div>
+
+            </div>
+
+            <div id="activity-history"></div>
+
+            <div id="ui-actions">
+                <button data-action="history" class="btn" title="Toggle history"></button>
+            </div>
+
+        </div>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>-->
+
+        <!-- build:js scripts/main.js -->
+        <script data-main="scripts/main" src="lib/requirejs/require.js"></script>
+        <!-- endbuild -->
+
+        <script type="text/template" id="activity-template">
+            <h2><%- task %></h2>
+            <button class="btn" data-action="complete-activity">Stop</button>
+        </script>
+
+        <script type="text/template" id="history-empty-template">
+            <div class="empty-state">
+                <h2>No tasks tracked so far.</h2>
+            </div>
+        </script>
+
+        <script type="text/template" id="history-section-template">
+            <% if (today) { %>
+                <div class="history-section">
+                    <h2>Today</h2>
+                    <p class="row">
+                        <span class="task">Task</span>
+                        <span class="start">Start time</span>
+                        <span class="duration">Duration</span>
+                    </p>
+                    <ol>
+                        <% _.each(today.activities, function (activity) { %>
+                            <li class="row">
+                                <span class="task"><%- activity.task %></span>
+                                <span class="start"><%- activity.start %></span>
+                                <span class="duration"><%- activity.duration %></span>
+                            </li>
+                        <% }); %>
+                    </ol>
+                </div>
+            <% } %>
+            <% _.each(grouped, function (section) { %>
+                <div class="history-section">
+                    <h2><%- section.heading %></h2>
+                    <p class="row">
+                        <span class="task">Task</span>
+                        <span class="start">Occurences</span>
+                        <span class="duration">Total</span>
+                    </p>
+                    <ol>
+                        <% _.each(section.activities, function (activity) { %>
+                            <li class="row">
+                                <span class="task"><%- activity.task %></span>
+                                <span class="start"><%- activity.start %></span>
+                                <span class="duration"><%- activity.duration %></span>
+                            </li>
+                        <% }); %>
+                    </ol>
+                </div>
+            <% }); %>
+        </script>
+
+</body>
+</html>

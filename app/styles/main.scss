@@ -1,0 +1,187 @@
+html, body {
+	height: 100%;
+}
+
+body {
+    background: #5e8adb;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+}
+
+#tempus-app {
+	height: 100%;
+	overflow: hidden;
+}
+
+#activity-actions {
+	height: 100%;
+	transition: transform 0.5s;
+
+	&.left {
+		transform: translate(-100%, 0);
+
+		#activity-history {
+			transform: translate(100%, 100%);
+		}
+	}
+
+	&.up {
+		transform: translate(0, -100%);
+	}
+
+	&.left.up {
+		transform: translate(-100%, -100%);
+	}
+}
+
+.clock-canvas {
+    transform: rotate(-90deg);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow:inset -2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+	padding: 8px 10px;
+	font-size: 1.4em;
+	border: 0;
+	box-shadow:inset 2px 2px 3px rgba(0, 0, 0, 0.2);
+	width: 300px;
+}
+
+.btn {
+	border: 0;
+	font-size: 1.1em;
+	background: #d14040;
+	color: #fff;
+	padding: 11px 24px;
+	position: relative;
+	top: -2px;
+	box-shadow:1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+	box-shadow:0px 0px 3px rgba(0, 0, 0, 0.2);
+	background: #9e2d2d;
+	outline: none;
+}
+.btn:focus {
+	outline: none;
+}
+
+@keyframes reveal { 
+	from {
+		transform: translate(0, -20px);
+		opacity: 0;
+	} 
+	to {
+		transform: translate(0, 0);
+		opacity: 1;
+	} 
+}
+
+.reveal {
+	transform: translate(0, -20px);
+	opacity: 0;
+	animation: reveal ease-in 1;
+	animation-fill-mode: forwards;
+	animation-duration: 0.3s;
+    animation-delay: 0.5s;
+    animation-timing-function: ease-out;
+}
+
+#form-main {
+	@extend .reveal;
+	text-align: center;
+	position: relative;
+	top: 40%;
+
+	fieldset {
+		border: 0;
+	}
+
+    legend {
+		font-size: 1.4em;
+		margin-bottom: 0.5em;
+    }
+}
+
+#current-activity {
+	position: absolute;
+	width: 100%;
+	top: 40%;
+	text-align: center;
+	transform: translate(100%, 0);
+}
+
+
+#ui-actions {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+
+	.btn {
+		top: 0;
+		background: #d14040 url(../images/stats.png) no-repeat 10px 10px;
+		height: 52px;
+		width: 52px;
+		padding: 6px;
+	}
+
+	.back {
+		background-image: url(../images/clock.png);
+	}
+}
+
+#activity-history {
+	transform: translate(0, 100%);
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	transition: transform 0.5s;
+	padding: 10%;
+	box-sizing: border-box;
+
+	&.up {
+		transform: translate(0, 0);
+	}
+}
+
+.empty-state {
+	padding-top: 40%;
+}
+
+.history-section {
+	padding-bottom: 30px;
+
+	p.row {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	}
+
+	ol {
+		list-style: none;
+		padding: 0;
+	}
+
+	li {
+		display: block;
+	}
+
+	.row {
+		padding: 4px 0;
+
+		span {
+			display: inline-block;
+			width: 29%;
+
+			&.task {
+				width: 48%;
+			}
+
+			&.start {
+				width :20%;
+			}
+		}
+	}
+}
