@@ -38,14 +38,14 @@ define([
                 if (activityGroups.thisWeek.length > 0) {
                     templateData.grouped.push({
                         heading: 'Earlier This Week',
-                        activities: this.formatSubset(activityGroups.thisWeek)
+                        days: this.formatGrouped(activityGroups.thisWeek)
                     });
                 }
 
                 if (activityGroups.lastWeek.length > 0) {
                     templateData.grouped.push({
                         heading: 'Last Week',
-                        activities: this.formatSubset(activityGroups.lastWeek)
+                        activities: this.formatGrouped(activityGroups.lastWeek)
                     });
                 }
 
@@ -79,7 +79,8 @@ define([
             var grouped = _.groupBy(group, function (activity) {
                     return activity.get('day');
                 }),
-                data;
+                data,
+                self = this;
 
             for (var i = 0; i < 7; i++) {
                 if (grouped[i]) {
@@ -100,6 +101,8 @@ define([
                                 data.occurences++;
                                 data.duration += activity.get('duration');
                             });
+
+                            data.duration = self.getTime(data.duration);
 
                             grouped[i][taskGroup] = data;
                             

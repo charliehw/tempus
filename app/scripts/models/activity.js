@@ -16,7 +16,9 @@ define([
         },
 
         initialize: function () {
-            this.clock = new ClockModel();
+            this.clock = new ClockModel({
+                duration: this.get('duration')
+            });
         }
     });
 

@@ -20,6 +20,12 @@ define([
             this.$actions = this.$('#activity-actions');
             this.activities = ActivitiesCollection;
             this.activities.fetch();
+
+            if (!this.activities.last().get('complete')) {
+                this.currentActivity = this.activities.last();
+                this.currentActivity.set('duration', Date.now() - this.currentActivity.get('duration'));
+                this.viewCurrentActivity();
+            }
             
             this.history = new HistoryView({
                 collection: this.activities
@@ -44,17 +50,21 @@ define([
                 day: new Date().getDay()
             });
 
+            this.activities.add(this.currentActivity);
+            this.viewCurrentActivity();
+
+            return false;
+        },
+
+        viewCurrentActivity: function () {
             var activityView = new ActivityView({
                 model: this.currentActivity
             });
 
-            this.activities.add(this.currentActivity);
             this.listenTo(this.currentActivity, 'change:complete', this.completeActivity);
 
             this.$actions.addClass('left');
             this.$input.val('');
-
-            return false;
         },
 
         completeActivity: function () {

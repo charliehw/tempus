@@ -75,7 +75,7 @@
                         <span class="start">Start time</span>
                         <span class="duration">Duration</span>
                     </p>
-                    <ol>
+                    <ol class="history-activities">
                         <% _.each(today.activities, function (activity) { %>
                             <li class="row">
                                 <span class="task"><%- activity.task %></span>
@@ -91,15 +91,21 @@
                     <h2><%- section.heading %></h2>
                     <p class="row">
                         <span class="task">Task</span>
-                        <span class="start">Occurences</span>
+                        <span class="start">Occurrences</span>
                         <span class="duration">Total</span>
                     </p>
-                    <ol>
-                        <% _.each(section.activities, function (activity) { %>
-                            <li class="row">
-                                <span class="task"><%- activity.task %></span>
-                                <span class="start"><%- activity.start %></span>
-                                <span class="duration"><%- activity.duration %></span>
+                    <ol class="history-days">
+                        <% _.each(section.days, function (day) { %>
+                            <li>
+                                <ol class="history-activities">
+                                    <% _.each(day, function (activity) { %>
+                                        <li class="row">
+                                            <span class="task"><%- activity.task %></span>
+                                            <span class="start"><%- activity.occurences %></span>
+                                            <span class="duration"><%- activity.duration %></span>
+                                        </li>
+                                    <% }); %>
+                                </ol>
                             </li>
                         <% }); %>
                     </ol>
