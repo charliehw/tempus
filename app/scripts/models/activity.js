@@ -17,7 +17,7 @@ define([
 
         initialize: function () {
             this.clock = new ClockModel({
-                duration: this.get('duration')
+                duration: this.get('duration') / 1000
             });
         }
     });

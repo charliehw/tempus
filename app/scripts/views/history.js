@@ -13,7 +13,8 @@ define([
 
         templates: {
             empty: _.template($('#history-empty-template').html()),
-            section: _.template($('#history-section-template').html())
+            section: _.template($('#history-section-template').html()),
+            grouped: _.template($('#history-grouped-template').html())
         },
 
     	initialize: function () {
@@ -25,31 +26,31 @@ define([
             if (this.collection.length < 1) {
                 this.$el.html(this.templates.empty());
             } else {
-                var activityGroups = this.groups(),
-                    templateData = {grouped: [], today: null};
+                var html = '',
+                    activityGroups = this.groups();
 
                 if (activityGroups.today.length > 0) {  
-                    templateData.today = {
+                    html += this.templates.section({
                         heading: 'Today',
                         activities: this.formatSubset(activityGroups.today)
-                    };
+                    })
                 }
 
                 if (activityGroups.thisWeek.length > 0) {
-                    templateData.grouped.push({
+                    html += this.templates.grouped({
                         heading: 'Earlier This Week',
                         days: this.formatGrouped(activityGroups.thisWeek)
                     });
                 }
 
                 if (activityGroups.lastWeek.length > 0) {
-                    templateData.grouped.push({
+                    html += this.templates.grouped({
                         heading: 'Last Week',
                         activities: this.formatGrouped(activityGroups.lastWeek)
                     });
                 }
 
-                this.$el.html(this.templates.section(templateData));
+                this.$el.html(html);
             }
         },
 

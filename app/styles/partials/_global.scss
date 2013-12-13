@@ -1,0 +1,64 @@
+html, body {
+	height: 100%;
+}
+
+body {
+    background: $bg-blue;
+    color: $text-color;
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+}
+
+#tempus-app {
+	height: 100%;
+	overflow: hidden;
+}
+
+.btn {
+	border: 0;
+	font-size: 1.1em;
+	background: $bg-red;
+	color: $text-color;
+	padding: 11px 24px;
+	position: relative;
+	top: -2px;
+	box-shadow:1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+	box-shadow:0px 0px 3px rgba(0, 0, 0, 0.2);
+	background: $bg-dark-red;
+	outline: none;
+}
+.btn:focus {
+	outline: none;
+}
+.btn-default {
+	background: #eee;
+	color: #555;
+	font-size: 0.8em;
+	padding: 8px 16px;
+}
+.btn-default:active {
+	background: #ccc;
+}
+
+@keyframes reveal { 
+	from {
+		transform: translate(0, -20px);
+		opacity: 0;
+	} 
+	to {
+		transform: translate(0, 0);
+		opacity: 1;
+	} 
+}
+
+.reveal {
+	transform: translate(0, -20px);
+	opacity: 0;
+	animation: reveal ease-in 1;
+	animation-fill-mode: forwards;
+	animation-duration: 0.3s;
+    animation-delay: 0.5s;
+    animation-timing-function: ease-out;
+}

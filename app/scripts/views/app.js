@@ -21,11 +21,13 @@ define([
             this.activities = ActivitiesCollection;
             this.activities.fetch();
 
-            if (!this.activities.last().get('complete')) {
-                this.currentActivity = this.activities.last();
-                this.currentActivity.set('duration', Date.now() - this.currentActivity.get('duration'));
-                this.viewCurrentActivity();
-            }
+            if (this.activities.length) {
+                if (!this.activities.last().get('complete')) {
+                    this.currentActivity = this.activities.last();
+                    this.currentActivity.set('duration', Date.now() - this.currentActivity.get('start'));
+                    this.viewCurrentActivity();
+                }
+            }         
             
             this.history = new HistoryView({
                 collection: this.activities
@@ -34,7 +36,8 @@ define([
 
         events: {
             'submit #form-main': 'createActivity',
-            'click [data-action=history]': 'showHistory'
+            'click [data-action=history]': 'showHistory',
+            'click [data-action=options]': 'showOptions'
         },
 
         createActivity: function () {
@@ -75,6 +78,10 @@ define([
             this.$actions.toggleClass('up');
             this.history.$el.toggleClass('up');
             this.$('[data-action=history]').toggleClass('back');
+        },
+
+        showOptions: function () {
+            this.$('#options').toggleClass('show');
         }
     	
     });

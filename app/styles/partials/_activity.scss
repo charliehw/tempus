@@ -1,0 +1,64 @@
+#activity-actions {
+	height: 100%;
+	transition: transform 0.5s;
+
+	&.left {
+		transform: translate(-100%, 0);
+
+		#activity-history {
+			transform: translate(100%, 100%);
+		}
+	}
+
+	&.up {
+		transform: translate(0, -100%);
+	}
+
+	&.left.up {
+		transform: translate(-100%, -100%);
+	}
+}
+
+.clock-canvas {
+    transform: rotate(-90deg);
+    border-radius: 50%;
+    background: $bg-light-blue;
+    box-shadow:inset -2px 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s;
+    &.show {
+    	opacity: 1;
+    }
+}
+
+.form-control {
+	padding: 8px 10px;
+	font-size: 1.4em;
+	border: 0;
+	box-shadow:inset 2px 2px 3px rgba(0, 0, 0, 0.2);
+	width: 300px;
+}
+
+#form-main {
+	@extend .reveal;
+	text-align: center;
+	position: relative;
+	top: 40%;
+
+	fieldset {
+		border: 0;
+	}
+
+    legend {
+		font-size: 1.4em;
+		margin-bottom: 0.5em;
+    }
+}
+
+#current-activity {
+	position: absolute;
+	width: 100%;
+	top: 40%;
+	text-align: center;
+	transform: translate(100%, 0);
+}

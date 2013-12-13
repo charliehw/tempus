@@ -29,6 +29,7 @@ define([
             this.drawSector(context, r, time.seconds/60, 'rgba(255, 0, 0, 0.3)');
             this.drawSector(context, r, time.minutes/60, 'rgba(0, 255, 0, 0.3)');
             this.drawSector(context, r, time.hours/24, 'rgba(0, 0, 255, 0.3)');
+            this.$el.addClass('show');
         },
 
         drawSector: function (context, r, factor, color) {
