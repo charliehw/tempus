@@ -1,4 +1,4 @@
-/* global define */
+/* global require */
 
 require.config({
     paths: {
@@ -16,9 +16,8 @@ require.config({
 });
 
 require([
-    'app', 
-    'jquery'
-], function (app, $) {
+    'app'
+], function (app) {
     'use strict';
     
     app.initialize();

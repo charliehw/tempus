@@ -9,7 +9,7 @@ define([
 
     var HistoryView = Backbone.View.extend({
 
-    	el: '#activity-history',
+        el: '#activity-history',
 
         templates: {
             empty: _.template($('#history-empty-template').html()),
@@ -17,48 +17,52 @@ define([
             grouped: _.template($('#history-grouped-template').html())
         },
 
-    	initialize: function () {
+        initialize: function () {
             this.listenTo(this.collection, 'change add', this.render);
-    		this.render();
-    	},
+            this.render();
+        },
 
         render: function () {
-            if (this.collection.length < 1) {
-                this.$el.html(this.templates.empty());
-            } else {
-                var html = '',
-                    activityGroups = this.groups();
+            var html = '',
+                key,
+                activityGroups = this.groups();
 
-                if (activityGroups.today.length > 0) {  
-                    html += this.templates.section({
-                        heading: 'Today',
-                        activities: this.formatSubset(activityGroups.today)
-                    })
-                }
-
-                if (activityGroups.thisWeek.length > 0) {
-                    html += this.templates.grouped({
-                        heading: 'Earlier This Week',
-                        days: this.formatGrouped(activityGroups.thisWeek)
-                    });
-                }
-
-                if (activityGroups.lastWeek.length > 0) {
-                    html += this.templates.grouped({
-                        heading: 'Last Week',
-                        activities: this.formatGrouped(activityGroups.lastWeek)
-                    });
+            if (this.collection.length) {
+                for (key in activityGroups) {
+                    if (activityGroups.hasOwnProperty(key)) {
+                        if (activityGroups[key].tasks.length) {
+                            html += activityGroups[key].template({
+                                heading: key,
+                                activities: activityGroups[key].tasks
+                            });
+                        }
+                    }
                 }
 
                 this.$el.html(html);
             }
+
+            if (!html) {
+                this.$el.html(this.templates.empty());
+            }
+
+            return this;
         },
 
         groups: function () {
             return {
-                today: this.collection.today(),
-                thisWeek: this.collection.thisWeek(),
-                lastWeek: this.collection.lastWeek()
+                'Today': {
+                    tasks: this.formatSubset(this.collection.today()), // Tasks today ungrouped
+                    template: this.templates.section
+                },
+                'Earlier This Week': {
+                    tasks: this.formatGrouped(this.collection.thisWeek()),
+                    template: this.templates.grouped
+                },
+                'Last Week': {
+                    tasks: this.formatGrouped(this.collection.lastWeek()),
+                    template: this.templates.grouped
+                }
             };
         },
 
@@ -81,15 +85,21 @@ define([
                     return activity.get('day');
                 }),
                 data,
-                self = this;
+                self = this,
+                sortActivityByTask = function (activity) {
+                    return activity.get('task');
+                },
+                groupSameTasks = function (activity) {
+                    data.task = activity.get('task');
+                    data.occurences++;
+                    data.duration += activity.get('duration');
+                };
 
             for (var i = 0; i < 7; i++) {
                 if (grouped[i]) {
 
                     // Group activities in a day by task name
-                    grouped[i] = _.groupBy(grouped[i], function (activity) {
-                        return activity.get('task');
-                    });
+                    grouped[i] = _.groupBy(grouped[i], sortActivityByTask);
 
                     for (var taskGroup in grouped[i]) {
                         if (grouped[i].hasOwnProperty(taskGroup)) {
@@ -97,11 +107,7 @@ define([
                             // Set a useful object in place of the array of actual activities
                             data = {task: '', occurences: 0, duration: 0};
 
-                            _.each(grouped[i][taskGroup], function (activity) {
-                                data.task = activity.get('task');
-                                data.occurences++;
-                                data.duration += activity.get('duration');
-                            });
+                            _.each(grouped[i][taskGroup], groupSameTasks);
 
                             data.duration = self.getTime(data.duration);
 
@@ -130,7 +136,7 @@ define([
                 return hours + minutes;
             }
         }
-    	
+
     });
 
     return HistoryView;

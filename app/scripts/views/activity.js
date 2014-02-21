@@ -13,7 +13,7 @@ define([
         
         template: _.template($('#activity-template').html()),
 
-    	initialize: function () {
+        initialize: function () {
             this.createClock();
             this.render();
         },

@@ -8,7 +8,7 @@ define([
 
     var ClockModel = Backbone.Model.extend({
         
-    	defaults: {
+        defaults: {
             duration: 0
         },
 

@@ -1,13 +1,13 @@
 /* global define */
 
 define([
-	'backbone', 
+	'backbone',
 	'router'
 ], function (Backbone, Router) {
     'use strict';
 
     function initialize() {
-        Router.initialize(); 
+        Router.initialize();
     }
 
     return {

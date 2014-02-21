@@ -12,7 +12,7 @@ define([
 
         tagName: 'canvas',
         
-    	initialize: function () {
+        initialize: function () {
             this.el.width = 50;
             this.el.height = 50;
             this.listenTo(this.model, 'change', this.render);

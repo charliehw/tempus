@@ -12,7 +12,7 @@ define([
             task: '',
             duration: 0,
             start: 0,
-            complete: false 
+            complete: false
         },
 
         initialize: function () {

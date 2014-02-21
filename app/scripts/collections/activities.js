@@ -10,9 +10,9 @@ define([
 
     var ActivitiesCollection = Backbone.Collection.extend({
         
-    	model: Activity,
+        model: Activity,
 
-    	localStorage: new Storage('activities'),
+        localStorage: new Storage('activities'),
 
         initialize: function () {
             this.on('change add', this.save);
@@ -28,7 +28,7 @@ define([
 
         thisWeek: function () {
             var today = this.getTodayDate(),
-                monday = this.getMondayDate(today);                
+                monday = this.getMondayDate(today);
 
             return this.filter(function (activity) {
                 var start = activity.get('start');

@@ -5,15 +5,14 @@
  */
 
 define([
-    'backbone', 
-    'router', 
+    'backbone',
     'views/app'
-], function (Backbone, Router, AppView) {
+], function (Backbone, AppView) {
     'use strict';
 
     var Router = Backbone.Router.extend({
         routes: {
-          '': 'main'
+            '': 'main'
         },
         
         main: function () {
@@ -23,7 +22,7 @@ define([
 
     return {
         initialize: function () {
-            var router = new Router();
+            new Router();
             Backbone.history.start();
         }
     };

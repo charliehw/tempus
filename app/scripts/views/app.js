@@ -1,4 +1,4 @@
-/* global define */
+/* global define, confirm */
 
 define([
 	'jquery',
@@ -13,9 +13,9 @@ define([
 
     var AppView = Backbone.View.extend({
 
-    	el: '#tempus-app',
+        el: '#tempus-app',
 
-    	initialize: function () { 		
+        initialize: function () {
             this.storeElements();
             this.activities = ActivitiesCollection;
             this.activities.fetch();
@@ -27,11 +27,12 @@ define([
             this.history = new HistoryView({
                 collection: this.activities
             });
-    	},
+        },
 
         events: {
             'submit #form-main': 'createActivity',
             'click [data-action=history]': 'showHistory',
+            'click [data-action=clear-history]': 'clearHistory',
             'click [data-action=options]': 'showOptions',
             'click .activity-suggestions li': 'activateSuggestion'
         },
@@ -56,7 +57,7 @@ define([
         },
 
         viewCurrentActivity: function () {
-            var activityView = new ActivityView({
+            new ActivityView({
                 model: this.currentActivity
             });
 
@@ -73,7 +74,7 @@ define([
                     this.currentActivity.set('duration', Date.now() - this.currentActivity.get('start'));
                     this.viewCurrentActivity();
                 }
-            }  
+            }
         },
 
         completeActivity: function () {
@@ -85,6 +86,14 @@ define([
             this.$actions.toggleClass('up');
             this.history.$el.toggleClass('up');
             this.$('[data-action=history]').toggleClass('back');
+        },
+
+        clearHistory: function () {
+            if (confirm('Clear all task history?')) {
+                this.activities.each(function (model) {
+                    model.destroy();
+                });
+            }
         },
 
         showOptions: function () {
@@ -107,7 +116,7 @@ define([
             this.$input.val(task);
             this.$('#form-main').submit();
         }
-    	
+
     });
 
     return AppView;
